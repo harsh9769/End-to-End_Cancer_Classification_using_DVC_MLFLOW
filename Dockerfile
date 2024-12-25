@@ -1,10 +1,11 @@
-FROM python:3.8-slim-buster
+FROM python:3.9-slim
 
-RUN apt update -y && apt install awscli -y
 WORKDIR /app
 
-COPY  . /app
+COPY requirements.txt /app/requirements.txt
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install -r requirements.txt
+COPY . /app
 
-CMD ["python","app.py"]
+CMD ["python", "app.py"]
